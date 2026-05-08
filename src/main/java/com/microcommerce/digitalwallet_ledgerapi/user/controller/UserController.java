@@ -1,8 +1,6 @@
 package com.microcommerce.digitalwallet_ledgerapi.user.controller;
 
 import com.microcommerce.digitalwallet_ledgerapi.user.dto.CreateUserRequest;
-import com.microcommerce.digitalwallet_ledgerapi.user.entity.User;
-import com.microcommerce.digitalwallet_ledgerapi.user.repository.UserRepository;
 import com.microcommerce.digitalwallet_ledgerapi.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
