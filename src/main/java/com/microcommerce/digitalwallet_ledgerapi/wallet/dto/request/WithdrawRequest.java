@@ -5,8 +5,10 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
-public class WithdrawRequest {
-    @NotNull
-    @Positive
-    BigDecimal amount;
+public record WithdrawRequest(
+        @NotNull
+        @Positive
+        BigDecimal amount
+) {
+
 }

@@ -63,6 +63,20 @@ public class WalletService {
         Wallet wallet = walletRepository.findById(walletId)
                 .orElseThrow(() -> new RuntimeException("wallet not found"));
 
+        BigDecimal currentBalance = wallet.getBalance();
+        BigDecimal withdrawRequestAmount = request.amount();
+        if (currentBalance.compareTo(withdrawRequestAmount) < 0 ){
+            throw new RuntimeException("withdraw amount not enough");
+        }
 
+        BigDecimal newBalance = currentBalance.subtract(withdrawRequestAmount);
+        WalletTransaction walletTransaction = new WalletTransaction();
+        walletTransaction.setWallet(wallet);
+        wallet.setBalance(newBalance);
+        walletTransaction.setAmount(withdrawRequestAmount);
+        walletTransaction.setType(TransactionType.WITHDRAW);
+        walletTransaction.setReferenceNumber(UUID.randomUUID().toString());
+        walletRepository.save(wallet);
+        transcationRepo.save(walletTransaction);
     }
 }
