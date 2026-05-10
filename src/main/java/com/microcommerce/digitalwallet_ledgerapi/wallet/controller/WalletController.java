@@ -1,6 +1,7 @@
 package com.microcommerce.digitalwallet_ledgerapi.wallet.controller;
 
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.CreateWalletRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.DepositRequest;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.WalletResponse;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.service.WalletService;
 import jakarta.validation.Valid;
@@ -27,5 +28,11 @@ public class WalletController {
     @ResponseStatus(HttpStatus.OK)
     public List<WalletResponse> findAllWallets(@PathVariable Long userId) {
         return walletService.findAllByUserId(userId);
+    }
+
+    @PostMapping("/{walletId}/deposit")
+    @ResponseStatus(HttpStatus.OK)
+    public void depositWallet(@PathVariable Long walletId, @Valid @RequestBody DepositRequest request) {
+        walletService.deposit(walletId, request);
     }
 }
