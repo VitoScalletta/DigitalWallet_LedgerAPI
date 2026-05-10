@@ -1,4 +1,4 @@
-package com.microcommerce.digitalwallet_ledgerapi.wallet.dto;
+package com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

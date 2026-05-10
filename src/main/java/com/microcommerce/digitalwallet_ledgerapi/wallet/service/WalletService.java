@@ -2,9 +2,10 @@ package com.microcommerce.digitalwallet_ledgerapi.wallet.service;
 
 import com.microcommerce.digitalwallet_ledgerapi.user.entity.User;
 import com.microcommerce.digitalwallet_ledgerapi.user.repository.UserRepository;
-import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.CreateWalletRequest;
-import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.DepositRequest;
-import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.WalletResponse;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.CreateWalletRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.DepositRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.WithdrawRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.response.WalletResponse;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.entity.TransactionType;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.entity.Wallet;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.entity.WalletTransaction;
@@ -55,5 +56,13 @@ public class WalletService {
 
         walletRepository.save(wallet);
         transcationRepo.save(walletTransaction);
+    }
+
+    @Transactional
+    public void withdraw(Long walletId, WithdrawRequest request){
+        Wallet wallet = walletRepository.findById(walletId)
+                .orElseThrow(() -> new RuntimeException("wallet not found"));
+
+
     }
 }

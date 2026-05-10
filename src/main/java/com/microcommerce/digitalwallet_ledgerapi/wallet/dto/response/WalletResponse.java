@@ -1,4 +1,4 @@
-package com.microcommerce.digitalwallet_ledgerapi.wallet.dto;
+package com.microcommerce.digitalwallet_ledgerapi.wallet.dto.response;
 
 import java.math.BigDecimal;
 

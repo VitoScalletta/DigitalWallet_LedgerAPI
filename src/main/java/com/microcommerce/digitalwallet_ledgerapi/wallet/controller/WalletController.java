@@ -1,11 +1,10 @@
 package com.microcommerce.digitalwallet_ledgerapi.wallet.controller;
 
-import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.CreateWalletRequest;
-import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.DepositRequest;
-import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.WalletResponse;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.CreateWalletRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.DepositRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.response.WalletResponse;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.service.WalletService;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
