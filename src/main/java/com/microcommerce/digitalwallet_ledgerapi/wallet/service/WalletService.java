@@ -4,6 +4,7 @@ import com.microcommerce.digitalwallet_ledgerapi.user.entity.User;
 import com.microcommerce.digitalwallet_ledgerapi.user.repository.UserRepository;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.CreateWalletRequest;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.DepositRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.TransferRequest;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.WithdrawRequest;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.response.WalletResponse;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.entity.TransactionType;
@@ -78,5 +79,43 @@ public class WalletService {
         walletTransaction.setReferenceNumber(UUID.randomUUID().toString());
         walletRepository.save(wallet);
         transcationRepo.save(walletTransaction);
+    }
+
+    @Transactional
+    public void transfer(Long fromWalletId, TransferRequest request){
+        Wallet fromWallet =  walletRepository.findById(fromWalletId)
+                .orElseThrow(() -> new RuntimeException("from wallet not found"));
+        Wallet toWallet = walletRepository.findById(request.toWalletId())
+                .orElseThrow(() -> new RuntimeException("to wallet not found"));
+
+        BigDecimal senderWalletBalance = fromWallet.getBalance();
+        BigDecimal receiverWalletBalance = toWallet.getBalance();
+        if (senderWalletBalance.compareTo(request.amount()) < 0){
+            throw new RuntimeException("balance not enough");
+        }
+
+        BigDecimal senderWalletNewBalance = senderWalletBalance.subtract(request.amount());
+        BigDecimal receiverWalletNewBalance = receiverWalletBalance.add(request.amount());
+        WalletTransaction fromWalletTransaction = new WalletTransaction();
+        WalletTransaction toWalletTransaction = new WalletTransaction();
+        fromWalletTransaction.setWallet(fromWallet);
+        toWalletTransaction.setWallet(toWallet);
+        fromWallet.setBalance(senderWalletNewBalance);
+        toWallet.setBalance(receiverWalletNewBalance);
+
+        fromWalletTransaction.setType(TransactionType.TRANSFER);
+        toWalletTransaction.setType(TransactionType.TRANSFER);
+
+        toWalletTransaction.setAmount(request.amount());
+        fromWalletTransaction.setAmount(request.amount());
+
+        String uuid = UUID.randomUUID().toString();
+        fromWalletTransaction.setReferenceNumber(uuid);
+        toWalletTransaction.setReferenceNumber(uuid);
+
+        walletRepository.save(fromWallet);
+        walletRepository.save(toWallet);
+        transcationRepo.save(fromWalletTransaction);
+        transcationRepo.save(toWalletTransaction);
     }
 }

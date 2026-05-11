@@ -2,6 +2,7 @@ package com.microcommerce.digitalwallet_ledgerapi.wallet.controller;
 
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.CreateWalletRequest;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.DepositRequest;
+import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.TransferRequest;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.request.WithdrawRequest;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.dto.response.WalletResponse;
 import com.microcommerce.digitalwallet_ledgerapi.wallet.service.WalletService;
@@ -40,5 +41,10 @@ public class WalletController {
     @ResponseStatus(HttpStatus.OK)
     public void withdrawWallet(@PathVariable Long walletId, @Valid @RequestBody WithdrawRequest request) {
         walletService.withdraw(walletId, request);
+    }
+
+    @PostMapping("/{walletId}/transfer")
+    public void transferWallet(@PathVariable Long walletId, @Valid @RequestBody TransferRequest request) {
+        walletService.transfer(walletId, request);
     }
 }
