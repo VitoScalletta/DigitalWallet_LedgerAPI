@@ -100,6 +100,7 @@ public class WalletService {
         WalletTransaction toWalletTransaction = new WalletTransaction();
         fromWalletTransaction.setWallet(fromWallet);
         toWalletTransaction.setWallet(toWallet);
+
         fromWallet.setBalance(senderWalletNewBalance);
         toWallet.setBalance(receiverWalletNewBalance);
 

@@ -30,4 +30,6 @@ public class Wallet extends BaseEntity {
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
 
+    @Version
+    private Integer version;
 }
